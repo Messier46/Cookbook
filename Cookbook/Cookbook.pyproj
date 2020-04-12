@@ -32,6 +32,9 @@
     <Compile Include="serverCheck.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="viewRecipes.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Interpreter Include="env\">
