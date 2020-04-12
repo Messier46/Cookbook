@@ -11,7 +11,29 @@ class ViewRecipes():
 
         myresult = mycursor.fetchall()
         #print(myresult)
-        for tup in myresult:
+
+        self.printLoop(myresult)
+        
+
+    def viewSelect(self):
+        mycursor = Lookup.mydb.cursor()
+
+        selection = input('What type of recipe are you looking for?\n')
+        selection = selection.lower()
+
+        sql = "SELECT Name, Type, Ingredients, Bake_Time, Bake_Temp, Directions, Favorite FROM recipes WHERE Type = %s"
+        adr = (selection,)
+        mycursor.execute(sql, adr)
+
+        myresult = mycursor.fetchall()
+        self.printLoop(myresult)
+    
+
+
+
+
+    def printLoop(self, tupHold):
+        for tup in tupHold:
             for st, var in enumerate(tup):
                 if st == 0:
                     print('Name: %s' % (var))
@@ -43,25 +65,4 @@ class ViewRecipes():
                     print()
                 else:
                     print('ERROR')
-
-    def viewSelect(self):
-        mycursor = Lookup.mydb.cursor()
-
-        selection = input('What type of recipe are you looking for?')
-        selection = selection.lower()
-
-        sql = "SELECT Name, Type, Ingredients, Bake_Time, Bake_Temp, Directions, Favorite FROM recipes WHERE Type = %s"
-        adr = (selection,)
-        mycursor.execute(sql, adr)
-
-        myresult = mycursor.fetchall()
-        for x in myresult:
-            print(x)
-    
-
-
-
-
-    def printLoop(self, tupHold):
-        pass
 
