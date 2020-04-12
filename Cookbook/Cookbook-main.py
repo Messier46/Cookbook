@@ -17,7 +17,7 @@ def reRun():
 while(contRun):
 	print('Welcome to the recipe adder and viewer. What would you like to do today?')
 	#Select between diffrent options via a number
-	selection = int(input('Please enter a number. \n(1)Add a recipe \n(2)View all recipes \n(3)View a select recipe \n(4)Quit\n'))
+	selection = int(input('Please enter a number. \n(1)Add a recipe \n(2)View all recipes \n(3)View a select recipe \n(4)To delete a recipe \n(5)Quit\n'))
 	
 	#Runs the add method and adds the new recipe to the database
 	if selection == 1:
@@ -37,8 +37,14 @@ while(contRun):
 		y.viewSelect()
 		contRun = reRun()
 
-	#Ends the program
+	#Delete
 	elif selection == 4:
+		d = Recipes()
+		d.delete()
+		contRun = reRun()
+
+	#Ends the program
+	elif selection == 5:
 		contRun = False
 
 

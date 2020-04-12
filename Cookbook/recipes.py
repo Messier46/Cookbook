@@ -18,8 +18,30 @@ class Recipes():
         print("Welcome to adding a recipe\n")
         while(self.rerun):
             self.name = input("What is the name of the recipe\n")
-            self.recipeType = input('What type of recipe is it\n')
-            self.recipeType = self.recipeType.lower()
+
+            typeInput = 0
+            while(typeInput <= 0 or typeInput > 7):
+                typeInput = int(input('What type of recipe is it? \n(1) for Breakfast \n(2) for Main Dish \n(3) for Side Dish \n(4) for Soup \n(5) for Bread \n(6) for Dessert \n(7) for Drink \n'))
+                if typeInput == 1:
+                    self.recipeType = 'Breakfast'
+                elif typeInput == 2:
+                    self.recipeType = 'Main Dish'
+                elif typeInput == 3:
+                    self.recipeType = 'Side Dish'
+                elif typeInput == 4:
+                    self.recipeType = 'Soup'
+                elif typeInput == 5:
+                    self.recipeType = 'Bread'
+                elif typeInput == 6:
+                    self.recipeType = 'Dessert'
+                elif typeInput == 7:
+                    self.recipeType = 'Drink'
+                else:
+                    print('Incorrect input')
+
+
+
+
 
             while(self.amount <= 0):
                 #Need to add exception handling expecially here
@@ -53,19 +75,19 @@ class Recipes():
                 self.favorite = 0
             else:
                 pass
-            print(self.favPick)
-            print(self.favorite)
+            
             #checker(self, self.name, self.ingString, self.bakeTime, self.directions)
 
 
-            #Relists everything the person has typed to be reviewed
+            #Converts ingredent list into a string
             for x in self.ing:
                 self.ingString += x
-            print('Name %s \nType %s \nIngredients %s \nBake Time %s \nBake Temp %i \n\nDirections %s \nFavorite %s' % (self.name, self.recipeType, self.ingString, self.bakeTime, self.bakeTemp, self.directions, self.favPick,))
+            #Relists everything the person has typed to be reviewed
+            print('\n\nName %s \nType %s \nIngredients %s \nBake Time %s \nBake Temp %i \n\nDirections %s \nFavorite %s' % (self.name, self.recipeType, self.ingString, self.bakeTime, self.bakeTemp, self.directions, self.favPick,))
 
-            clearUp = input('Does this look correct? If yes type in yes to continue, else type no to retype the recipe')
+            clearUp = input('Does this look correct? If yes type in yes to continue, else type no to retype the recipe\n')
             while(clearUp != 'no' and clearUp != 'yes'):
-                clearUp = input('Incorrect input. Does this look correct? If yes type in yes to continue, else type no to retype the recipe')
+                clearUp = input('Incorrect input. Does this look correct? If yes type in yes to continue, else type no to retype the recipe\n')
 
             #If yes leaves rerun while loop
             if(clearUp == 'yes'):
@@ -93,4 +115,32 @@ class Recipes():
         mycursor.execute(sql, val)
         
         Lookup.mydb.commit()
-        
+    
+    def delete(self):
+        inList = False
+        print('Welcome to the delete menu')
+
+        mycursor = Lookup.mydb.cursor()
+        mycursor.execute("SELECT Id, Name, Type FROM recipes ORDER BY Id")
+        myresult = mycursor.fetchall()
+
+        for x in myresult:
+            print('Id: %i   Name: %s   Type: %s \n' % (x))
+        tbDelete = int(input('Please type the Id you would like to delete\n'))
+        #Need exception handling
+
+        for x in myresult:
+            if(tbDelete == x[0]):
+                inList = True
+            else:
+                pass
+        if(inList == False):
+            print('No recipe found with that Id\n')
+        else:
+            mycursor2 = Lookup.mydb.cursor()
+            sql = "DELETE FROM recipes WHERE Id = %s"
+            adr = (tbDelete,)
+            
+            mycursor2.execute(sql, adr)
+
+            Lookup.mydb.commit()
