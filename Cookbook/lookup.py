@@ -1,5 +1,5 @@
 import mysql.connector
-class lookup():
+class Lookup():
     """description of class"""
     
     mydb = mysql.connector.connect(
