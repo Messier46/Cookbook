@@ -1,16 +1,44 @@
+#Main Class
 from recipes import Recipes
 from viewRecipes import ViewRecipes
 contRun = True
 
-
-while(contRun):
-	#x = Recipes()
-	#x.add()
-	y = ViewRecipes()
-	y.viewAll()
-	#y.viewSelect()
-
-	hold = input('\nWould you like to look up another? (yes or no)\n')
+#Used to ask if they want to continue
+def reRun():
+	hold = input('\nWould you like to look up or add another recipe? (yes or no)\n')
 	if hold.lower() == 'no':
+		contCheck = False
+	else:
+		contCheck = True
+	return contCheck
+
+
+#Loop to keep asking what they would like to do
+while(contRun):
+	print('Welcome to the recipe adder and viewer. What would you like to do today?')
+	#Select between diffrent options via a number
+	selection = int(input('Please enter a number. \n(1)Add a recipe \n(2)View all recipes \n(3)View a select recipe \n(4)Quit\n'))
+	
+	#Runs the add method and adds the new recipe to the database
+	if selection == 1:
+		x = Recipes()
+		x.add()
+		contRun = reRun()
+	
+	#Displays all recipes in the database
+	elif selection == 2:
+		y = ViewRecipes()
+		y.viewAll()
+		contRun = reRun()
+
+	#Displays a recipes based on the type of recipe the user picks
+	elif selection == 3:
+		y = ViewRecipes()
+		y.viewSelect()
+		contRun = reRun()
+
+	#Ends the program
+	elif selection == 4:
 		contRun = False
+
 

@@ -93,4 +93,4 @@ class Recipes():
         mycursor.execute(sql, val)
         
         Lookup.mydb.commit()
-    
+        
