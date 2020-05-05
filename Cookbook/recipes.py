@@ -17,7 +17,7 @@ class Recipes():
     idHold = 0
 
     def add(self):
-        if(process == 'update'):
+        if(self.process == 'update'):
             print('Welcome to updating a recipe\n')
         else:
             print("Welcome to adding a recipe\n")
