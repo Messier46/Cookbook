@@ -1,5 +1,5 @@
 #from serverCheck import checker
-from lookup import Lookup
+from dbConnection import Lookup
 class Recipes():
     """This class currently holds the adding a recipe method"""
     
@@ -13,9 +13,15 @@ class Recipes():
     directions = ''
     favorite = 0
     rerun = True
+    process = 'add'
+    idHold = 0
 
     def add(self):
-        print("Welcome to adding a recipe\n")
+        if(process == 'update'):
+            print('Welcome to updating a recipe\n')
+        else:
+            print("Welcome to adding a recipe\n")
+
         while(self.rerun):
             self.name = input("What is the name of the recipe\n")
 
@@ -104,17 +110,38 @@ class Recipes():
                 self.bakeTemp = 0
                 self.directions = ''
                 self.favorite = 0
-            
+        if(self.process == 'add'):
+            #Runs the database INSERT statement outside of the rerun loop
+            mycursor = Lookup.mydb.cursor()
+            #Always %s for variables in sql statements
+            sql = "INSERT INTO recipes (Name, Type, Ingredients, Bake_Time, Bake_Temp, Directions, Favorite) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+            val = (self.name, self.recipeType, self.ingString, self.bakeTime, self.bakeTemp, self.directions, self.favorite)
 
-        #Runs the database INSERT statement outside of the rerun loop
-        mycursor = Lookup.mydb.cursor()
-        #Always %s for variables in sql statements
-        sql = "INSERT INTO recipes (Name, Type, Ingredients, Bake_Time, Bake_Temp, Directions, Favorite) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-        val = (self.name, self.recipeType, self.ingString, self.bakeTime, self.bakeTemp, self.directions, self.favorite)
-
-        mycursor.execute(sql, val)
+            mycursor.execute(sql, val)
         
-        Lookup.mydb.commit()
+            Lookup.mydb.commit()
+
+
+            
+        else:
+            #Runs the database INSERT statement outside of the rerun loop
+            mycursor = Lookup.mydb.cursor()
+            #Always %s for variables in sql statements
+            sql = "UPDATE recipes SET Name = %s, Type = %s, Ingredients = %s, Bake_Time = %s, Bake_Temp = %s, Directions = %s, Favorite = %s WHERE Id = %s"
+            val = (self.name, self.recipeType, self.ingString, self.bakeTime, self.bakeTemp, self.directions, self.favorite, self.idHold)
+
+            mycursor.execute(sql, val)
+        
+            Lookup.mydb.commit()
+            self.process = 'add'
+            self.idHold = 0
+                
+
+
+
+
+
+
     
     def delete(self):
         inList = False
@@ -126,8 +153,13 @@ class Recipes():
 
         for x in myresult:
             print('Id: %i   Name: %s   Type: %s \n' % (x))
-        tbDelete = int(input('Please type the Id you would like to delete\n'))
+        tbDelete = input('Please type the Id you would like to delete.\nOtherwise, type cancel to go back. \n')
         #Need exception handling
+        if(tbDelete == "cancel"):
+            tbDelete = 0
+            return
+            
+        tbDelete = int(tbDelete)
 
         for x in myresult:
             if(tbDelete == x[0]):
@@ -144,3 +176,42 @@ class Recipes():
             mycursor2.execute(sql, adr)
 
             Lookup.mydb.commit()
+
+
+    def update(self):
+        
+        inList = False
+        print('Welcome to the update menu')
+
+        mycursor = Lookup.mydb.cursor()
+        mycursor.execute("SELECT Id, Name, Type FROM recipes ORDER BY Id")
+        myresult = mycursor.fetchall()
+
+        for x in myresult:
+            print('Id: %i   Name: %s   Type: %s \n' % (x))
+        tbUpdate = input('Please type the Id you would like to update.\nOtherwise, type cancel to go back. \n')
+        #Need exception handling
+        if(tbUpdate == "cancel"):
+            tbUpdate = 0
+            return
+            
+        tbUpdate = int(tbUpdate)
+
+        for x in myresult:
+            if(tbUpdate == x[0]):
+                inList = True
+            else:
+                pass
+        if(inList == False):
+            print('No recipe found with that Id\n')
+        else:
+            self.process = 'update'
+            self.idHold = tbUpdate
+            self.add()
+        
+
+
+
+
+
+        

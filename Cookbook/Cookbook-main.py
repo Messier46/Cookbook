@@ -15,36 +15,44 @@ def reRun():
 
 #Loop to keep asking what they would like to do
 while(contRun):
-	print('Welcome to the recipe adder and viewer. What would you like to do today?')
+	print('Welcome to the recipe adder, updater and viewer. What would you like to do today?')
 	#Select between diffrent options via a number
-	selection = int(input('Please enter a number. \n(1)Add a recipe \n(2)View all recipes \n(3)View a select recipe \n(4)To delete a recipe \n(5)Quit\n'))
+	selection = input('Please enter a number. \n(1)Add a recipe \n(2)View all recipes \n(3)View a select recipe \n(4)To update a recipe \n(5)To delete a recipe \n(6)Quit\n')
 	
 	#Runs the add method and adds the new recipe to the database
-	if selection == 1:
+	if selection == "1":
 		x = Recipes()
 		x.add()
 		contRun = reRun()
-	
+
 	#Displays all recipes in the database
-	elif selection == 2:
+	elif selection == "2":
 		y = ViewRecipes()
 		y.viewAll()
 		contRun = reRun()
 
 	#Displays a recipes based on the type of recipe the user picks
-	elif selection == 3:
+	elif selection == "3":
 		y = ViewRecipes()
 		y.viewSelect()
 		contRun = reRun()
 
-	#Delete
-	elif selection == 4:
+	#Update a recipe
+	elif selection == "4":
+		u = Recipes()
+		u.update()
+		contRun = reRun()
+
+	#Delete a recipe
+	elif selection == "5":
 		d = Recipes()
 		d.delete()
 		contRun = reRun()
 
 	#Ends the program
-	elif selection == 5:
+	elif selection == "6":
 		contRun = False
 
+	else:
+		print("Inccorect input.")
 
