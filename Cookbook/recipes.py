@@ -1,5 +1,5 @@
 #from serverCheck import checker
-from dbConnection import Lookup
+#from dbConnection import Lookup
 class Recipes():
     """This class currently holds the adding a recipe method"""
     
@@ -74,6 +74,8 @@ class Recipes():
             while self.favPick.lower() != 'yes' and self.favPick.lower() != 'no':
                 self.favPick = input('Incorrect input. Is this a family favorite (Yes or No)\n')
             
+
+
             #The one or zero will be sent to the database for a boolean
             if self.favPick == 'yes':
                 self.favorite = 1
@@ -81,7 +83,9 @@ class Recipes():
                 self.favorite = 0
             else:
                 pass
-            
+
+
+
             #checker(self, self.name, self.ingString, self.bakeTime, self.directions)
 
 
@@ -110,31 +114,22 @@ class Recipes():
                 self.bakeTemp = 0
                 self.directions = ''
                 self.favorite = 0
-        if(self.process == 'add'):
-            #Runs the database INSERT statement outside of the rerun loop
-            mycursor = Lookup.mydb.cursor()
-            #Always %s for variables in sql statements
-            sql = "INSERT INTO recipes (Name, Type, Ingredients, Bake_Time, Bake_Temp, Directions, Favorite) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-            val = (self.name, self.recipeType, self.ingString, self.bakeTime, self.bakeTemp, self.directions, self.favorite)
 
-            mycursor.execute(sql, val)
-        
-            Lookup.mydb.commit()
+
+
+
+
+
+
+
+
+        if(self.process == 'add'):
+            pass
 
 
             
         else:
-            #Runs the database INSERT statement outside of the rerun loop
-            mycursor = Lookup.mydb.cursor()
-            #Always %s for variables in sql statements
-            sql = "UPDATE recipes SET Name = %s, Type = %s, Ingredients = %s, Bake_Time = %s, Bake_Temp = %s, Directions = %s, Favorite = %s WHERE Id = %s"
-            val = (self.name, self.recipeType, self.ingString, self.bakeTime, self.bakeTemp, self.directions, self.favorite, self.idHold)
-
-            mycursor.execute(sql, val)
-        
-            Lookup.mydb.commit()
-            self.process = 'add'
-            self.idHold = 0
+            pass
                 
 
 
