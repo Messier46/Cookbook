@@ -1,7 +1,26 @@
 #Main Class
+import os
+import json
 from recipes import Recipes
 from viewRecipes import ViewRecipes
 contRun = True
+
+if(os.path.isfile("Recipe_Holder.json")):
+	pass
+else:
+	newFile = {
+		"Breakfast": {},
+		"Main_Dish": {},
+		"Side_Dish": {},
+		"Soup": {},
+		"Bread": {},
+		"Dessert": {},
+		"Drink": {}
+		}
+	with open("Recipe_Holder.json", "w") as outfile:
+		json.dump(newFile, outfile)
+
+		
 
 #Used to ask if they want to continue
 def reRun():
