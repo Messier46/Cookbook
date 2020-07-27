@@ -30,19 +30,19 @@ class Recipes():
             while(typeInput <= 0 or typeInput > 7):
                 typeInput = int(input('What type of recipe is it? \n(1) for Breakfast \n(2) for Main Dish \n(3) for Side Dish \n(4) for Soup \n(5) for Bread \n(6) for Dessert \n(7) for Drink \n'))
                 if typeInput == 1:
-                    self.recipeType = 'Breakfast'
+                    self.recipeType = 'Breakfast.json'
                 elif typeInput == 2:
-                    self.recipeType = 'Main Dish'
+                    self.recipeType = 'Main_Dish.json'
                 elif typeInput == 3:
-                    self.recipeType = 'Side Dish'
+                    self.recipeType = 'Side_Dish.json'
                 elif typeInput == 4:
-                    self.recipeType = 'Soup'
+                    self.recipeType = 'Soup.json'
                 elif typeInput == 5:
-                    self.recipeType = 'Bread'
+                    self.recipeType = 'Bread.json'
                 elif typeInput == 6:
-                    self.recipeType = 'Dessert'
+                    self.recipeType = 'Dessert.json'
                 elif typeInput == 7:
-                    self.recipeType = 'Drink'
+                    self.recipeType = 'Drink.json'
                 else:
                     print('Incorrect input')
 
@@ -120,13 +120,16 @@ class Recipes():
 
 
 
-
-
-
-
         if(self.process == 'add'):
-            pass
-
+            recipe = {
+                "name": self.name,
+                "ingredients": self.ingString,
+                "Bake Time": self.bakeTime,
+                "Bake Temprature": self.bakeTemp,
+                "Directions": self.directions,
+                "Favorite": self.favorite
+                }
+            jsonRecipe = json.dumps(recipe)
 
             
         else:

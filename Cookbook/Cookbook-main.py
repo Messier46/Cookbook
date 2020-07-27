@@ -5,22 +5,65 @@ from recipes import Recipes
 from viewRecipes import ViewRecipes
 contRun = True
 
-if(os.path.isfile("Recipe_Holder.json")):
+if(os.path.isfile("Breakfast_Holder.json")):
 	pass
 else:
-	newFile = {
-		"Breakfast": {},
-		"Main_Dish": {},
-		"Side_Dish": {},
-		"Soup": {},
-		"Bread": {},
-		"Dessert": {},
-		"Drink": {}
-		}
-	with open("Recipe_Holder.json", "w") as outfile:
+	with open("Breakfast_Holder.json", "w") as outfile:
+		newFile = {
+			"Breakfast": {}
+			}
 		json.dump(newFile, outfile)
+		outfile.close()
 
-		
+
+	with open("Main_Dish_Holder.json", "w") as outfile:
+		newFile = {
+			"Main_Dish": {}
+			}
+		json.dump(newFile, outfile)
+		outfile.close()
+
+
+	with open("Side_Dish_Holder.json", "w") as outfile:
+		newFile = {
+			"Side_Dish": {}
+			}
+		json.dump(newFile, outfile)
+		outfile.close()
+
+
+	with open("Soup_Holder.json", "w") as outfile:
+		newFile = {
+			"Soup": {}
+			}
+		json.dump(newFile, outfile)
+		outfile.close()
+
+
+	with open("Bread_Holder.json", "w") as outfile:
+		newFile = {
+			"Bread": {}
+			}
+		json.dump(newFile, outfile)
+		outfile.close()
+
+
+	with open("Dessert_Holder.json", "w") as outfile:
+		newFile = {
+			"Dessert": {}
+			}
+		json.dump(newFile, outfile)
+		outfile.close()
+
+
+	with open("Drink_Holder.json", "w") as outfile:
+		newFile = {
+			"Drink": {}
+			}
+		json.dump(newFile, outfile)
+		outfile.close()
+
+
 
 #Used to ask if they want to continue
 def reRun():
