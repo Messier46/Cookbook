@@ -1,65 +1,51 @@
-#Main Class
+# Main Class
 import os
 import json
 from recipes import Recipes
 from viewRecipes import ViewRecipes
 contRun = True
 
-if(os.path.isfile("Breakfast_Holder.json")):
+if(os.path.isfile("Breakfast.json")):
 	pass
 else:
-	with open("Breakfast_Holder.json", "w") as outfile:
-		newFile = {
-			"Breakfast": {}
-			}
+	with open("Breakfast.json", "w") as outfile:
+		newFile = {}
 		json.dump(newFile, outfile)
 		outfile.close()
 
 
-	with open("Main_Dish_Holder.json", "w") as outfile:
-		newFile = {
-			"Main_Dish": {}
-			}
+	with open("Main_Dish.json", "w") as outfile:
+		newFile = {}
 		json.dump(newFile, outfile)
 		outfile.close()
 
 
-	with open("Side_Dish_Holder.json", "w") as outfile:
-		newFile = {
-			"Side_Dish": {}
-			}
+	with open("Side_Dish.json", "w") as outfile:
+		newFile = {}
 		json.dump(newFile, outfile)
 		outfile.close()
 
 
-	with open("Soup_Holder.json", "w") as outfile:
-		newFile = {
-			"Soup": {}
-			}
+	with open("Soup.json", "w") as outfile:
+		newFile = {}
 		json.dump(newFile, outfile)
 		outfile.close()
 
 
-	with open("Bread_Holder.json", "w") as outfile:
-		newFile = {
-			"Bread": {}
-			}
+	with open("Bread.json", "w") as outfile:
+		newFile = {}
 		json.dump(newFile, outfile)
 		outfile.close()
 
 
-	with open("Dessert_Holder.json", "w") as outfile:
-		newFile = {
-			"Dessert": {}
-			}
+	with open("Dessert.json", "w") as outfile:
+		newFile = {}
 		json.dump(newFile, outfile)
 		outfile.close()
 
 
-	with open("Drink_Holder.json", "w") as outfile:
-		newFile = {
-			"Drink": {}
-			}
+	with open("Drink.json", "w") as outfile:
+		newFile = {}
 		json.dump(newFile, outfile)
 		outfile.close()
 

@@ -6,6 +6,7 @@ class Recipes():
     
     name = ''
     recipeType = ''
+    jsonRecipe = ''
     amount = 0
     ing = []
     ingString = ''
@@ -16,6 +17,7 @@ class Recipes():
     rerun = True
     process = 'add'
     idHold = 0
+    tempFConvert = ''
 
     def add(self):
         if(self.process == 'update'):
@@ -31,6 +33,7 @@ class Recipes():
                 typeInput = int(input('What type of recipe is it? \n(1) for Breakfast \n(2) for Main Dish \n(3) for Side Dish \n(4) for Soup \n(5) for Bread \n(6) for Dessert \n(7) for Drink \n'))
                 if typeInput == 1:
                     self.recipeType = 'Breakfast.json'
+                    self.jsonRecipe = 'Breakfast'
                 elif typeInput == 2:
                     self.recipeType = 'Main_Dish.json'
                 elif typeInput == 3:
@@ -121,16 +124,31 @@ class Recipes():
 
 
         if(self.process == 'add'):
-            recipe = {
-                "name": self.name,
-                "ingredients": self.ingString,
-                "Bake Time": self.bakeTime,
-                "Bake Temprature": self.bakeTemp,
-                "Directions": self.directions,
-                "Favorite": self.favorite
-                }
-            jsonRecipe = json.dumps(recipe)
+            jsonFile = open(self.recipeType, "r")
+            convertFile = json.load(jsonFile)
+            jsonFile.close()
+            print(convertFile)
+            #recipe = {
+            #    "name": self.name,
+            #    "ingredients": self.ingString,
+            #    "Bake Time": self.bakeTime,
+            #    "Bake Temprature": self.bakeTemp,
+            #    "Directions": self.directions,
+            #    "Favorite": self.favorite
+            #    }
+            convertFile[self.name] = {}
 
+            convertFile[self.name]["ingredients"] = self.ingString
+            convertFile[self.name]["Bake Time"] = self.bakeTime
+            convertFile[self.name]["Bake Temperature"] = self.bakeTemp
+            convertFile[self.name]["Directions"] = self.directions
+            convertFile[self.name]["Favorite"] = self.favorite
+
+            print(convertFile)
+            revertFile = json.dumps(convertFile)
+            jsonFile = open(self.recipeType, "w")
+            jsonFile.write(revertFile)
+            jsonFile.close()
             
         else:
             pass
