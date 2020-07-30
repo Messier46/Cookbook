@@ -6,7 +6,6 @@ class Recipes():
     
     name = ''
     recipeType = ''
-    jsonRecipe = ''
     amount = 0
     ing = []
     ingString = ''
@@ -30,10 +29,12 @@ class Recipes():
 
             typeInput = 0
             while(typeInput <= 0 or typeInput > 7):
-                typeInput = int(input('What type of recipe is it? \n(1) for Breakfast \n(2) for Main Dish \n(3) for Side Dish \n(4) for Soup \n(5) for Bread \n(6) for Dessert \n(7) for Drink \n'))
+                try:
+                    typeInput = int(input('What type of recipe is it? \n(1) for Breakfast \n(2) for Main Dish \n(3) for Side Dish \n(4) for Soup \n(5) for Bread \n(6) for Dessert \n(7) for Drink \n'))
+                except: 
+                    typeInput = 0
                 if typeInput == 1:
                     self.recipeType = 'Breakfast.json'
-                    self.jsonRecipe = 'Breakfast'
                 elif typeInput == 2:
                     self.recipeType = 'Main_Dish.json'
                 elif typeInput == 3:
@@ -55,10 +56,17 @@ class Recipes():
 
             while(self.amount <= 0):
                 #Need to add exception handling expecially here
-
-                self.amount = int(input('How many ingredients are there.\n'))
+                try:
+                    self.amount = int(input('How many ingredients are there.\n'))
+                except:
+                    print('No input/incorrect input')
+                    self.amount = 0
             for x in range(self.amount):
-                self.ing.append(input("What is the ingredient and it's amount? (Press enter after each ingredient and qty added)\n") + ', ')
+                singleIng = ''
+                singleIng = input("What is the ingredient and it's amount? (Press enter after each ingredient and qty added)\n")
+                while(singleIng == ''):
+                    singleIng = input("Blank input. What is the ingredient and it's amount? (Press enter after each ingredient and qty added)\n")
+                self.ing.append(singleIng  + ', ')
 
             #Asks whether the recipe needs to bake or not.
             self.decTemp = input('Does it need to bake (yes or no)\n')
@@ -66,7 +74,13 @@ class Recipes():
                 self.decTemp = input('Incorrect input. \nDoes it need to bake (yes or no)\n')
             if(self.decTemp.lower() == 'yes'):
                 self.bakeTime = input('What is the baking time\n')
-                self.bakeTemp = int(input('What is the baking temprature (only the number)\n'))
+                while(self.bakeTime == ''):
+                    self.bakeTime = input('Blank input. What is the baking time\n')
+                while(self.bakeTemp == 0):
+                    try:
+                        self.bakeTemp = int(input('What is the baking temprature (only the number)\n'))
+                    except:
+                        self.bakeTemp = 0
             elif self.decTemp.lower() == 'no':
                 pass;
         
@@ -127,15 +141,8 @@ class Recipes():
             jsonFile = open(self.recipeType, "r")
             convertFile = json.load(jsonFile)
             jsonFile.close()
-            print(convertFile)
-            #recipe = {
-            #    "name": self.name,
-            #    "ingredients": self.ingString,
-            #    "Bake Time": self.bakeTime,
-            #    "Bake Temprature": self.bakeTemp,
-            #    "Directions": self.directions,
-            #    "Favorite": self.favorite
-            #    }
+            
+            
             convertFile[self.name] = {}
 
             convertFile[self.name]["ingredients"] = self.ingString
@@ -144,8 +151,7 @@ class Recipes():
             convertFile[self.name]["Directions"] = self.directions
             convertFile[self.name]["Favorite"] = self.favorite
 
-            print(convertFile)
-            revertFile = json.dumps(convertFile)
+            revertFile = json.dumps(convertFile, indent=4)
             jsonFile = open(self.recipeType, "w")
             jsonFile.write(revertFile)
             jsonFile.close()
