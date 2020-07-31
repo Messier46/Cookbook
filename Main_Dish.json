@@ -1,6 +1,6 @@
 {
     "test Main": {
-        "ingredients": "the be 99, to be 89, ",
+        "Ingredients": "the be 99, to be 89, ",
         "Bake Time": "75 min",
         "Bake Temperature": 350,
         "Directions": "Bake",

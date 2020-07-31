@@ -145,7 +145,7 @@ class Recipes():
             
             convertFile[self.name] = {}
 
-            convertFile[self.name]["ingredients"] = self.ingString
+            convertFile[self.name]["Ingredients"] = self.ingString
             convertFile[self.name]["Bake Time"] = self.bakeTime
             convertFile[self.name]["Bake Temperature"] = self.bakeTemp
             convertFile[self.name]["Directions"] = self.directions

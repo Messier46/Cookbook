@@ -1,32 +1,71 @@
 # from dbConnection import Lookup
+import os
+import json
 class ViewRecipes():
     """description of class"""
 
 
 
     def viewAll(self):
-        mycursor = Lookup.mydb.cursor()
+        recipeHolder = {}
+        for file in os.listdir("../Cookbook"):
+            if(file.endswith(".json")):
+                with open(file, "r") as jsonRecipe:
+                    f = json.load(jsonRecipe)
+                    if(len(recipeHolder) == 0):
+                        recipeHolder = f.copy()
 
-        mycursor.execute("SELECT Name, Type, Ingredients, Bake_Time, Bake_Temp, Directions, Favorite FROM recipes ORDER BY Type")
-
-        myresult = mycursor.fetchall()
-        #print(myresult)
-
-        self.printLoop(myresult)
+                    else:
+                        recipeHolder.update(f)
+                    jsonRecipe.close()
+        for reName, reInfo in recipeHolder.items():
+            print("\nRecipe Name:", reName)
+            
+            for key in reInfo:
+                print(key + ':', reInfo[key])
         
 
     def viewSelect(self):
-        mycursor = Lookup.mydb.cursor()
 
-        selection = input('What type of recipe are you looking for?\n')
-        selection = selection.lower()
+        typeInput = 0
+        recipeType = ''
+        recipeHolder = {}
+        while(typeInput <= 0 or typeInput > 7):
+            try:
+                typeInput = int(input('What type of recipe are you looking for?\n(1) for Breakfast \n(2) for Main Dish \n(3) for Side Dish \n(4) for Soup \n(5) for Bread \n(6) for Dessert \n(7) for Drink \n'))
+            except: 
+                typeInput = 0
+            if typeInput == 1:
+                recipeType = 'Breakfast.json'
+            elif typeInput == 2:
+                recipeType = 'Main_Dish.json'
+            elif typeInput == 3:
+                recipeType = 'Side_Dish.json'
+            elif typeInput == 4:
+                recipeType = 'Soup.json'
+            elif typeInput == 5:
+                recipeType = 'Bread.json'
+            elif typeInput == 6:
+                recipeType = 'Dessert.json'
+            elif typeInput == 7:
+                recipeType = 'Drink.json'
+            else:
+                print('Incorrect input')
 
-        sql = "SELECT Name, Type, Ingredients, Bake_Time, Bake_Temp, Directions, Favorite FROM recipes WHERE Type = %s"
-        adr = (selection,)
-        mycursor.execute(sql, adr)
-
-        myresult = mycursor.fetchall()
-        self.printLoop(myresult)
+        for file in os.listdir("../Cookbook"):
+            if(file == recipeType):
+                with open(file, "r") as jsonRecipe:
+                    f = json.load(jsonRecipe)
+                    recipeHolder = f.copy()
+                    jsonRecipe.close()
+        
+        if(len(recipeHolder) == 0):
+            print("There are currently no recipes for this type.")
+        for reName, reInfo in recipeHolder.items():
+            print("\nRecipe Name:", reName)
+            
+            for key in reInfo:
+                print(key + ':', reInfo[key])
     
 
 

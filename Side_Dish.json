@@ -1,23 +1,16 @@
 {
     "test Side": {
-        "ingredients": "text 22, ",
+        "Ingredients": "text 22, ",
         "Bake Time": "",
         "Bake Temperature": 0,
         "Directions": "yet to be",
         "Favorite": 1
     },
     "test side": {
-        "ingredients": "hereBe 994, thereBe 99, test 1, test 2, test 3, test 4, test 5, test 6, test 7, ",
+        "Ingredients": "hereBe 994, thereBe 99, test 1, test 2, test 3, test 4, test 5, test 6, test 7, ",
         "Bake Time": "",
         "Bake Temperature": 0,
         "Directions": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut purus varius, rutrum ligula ut, porttitor sem. Sed hendrerit sem vel enim consequat, nec pretium elit euismod. Nulla placerat non massa vitae malesuada. Proin nec ante quis dui posuere malesuada. Nulla facilisi. Ut ullamcorper augue urna, ac efficitur turpis mattis quis. Aliquam pellentesque mi quis purus ultricies commodo. Vestibulum mauris elit, lacinia ut imperdiet quis, tempus non lacus. Donec et rutrum elit. Mauris malesuada sem sit am",
-        "Favorite": 0
-    },
-    "fae": {
-        "ingredients": "eaf 3, ",
-        "Bake Time": "39",
-        "Bake Temperature": 493,
-        "Directions": "",
         "Favorite": 0
     }
 }
