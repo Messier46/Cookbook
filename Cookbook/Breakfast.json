@@ -1,9 +1,9 @@
 {
     "test3": {
-        "Ingredients": "text 12, ",
-        "Bake Time": "",
-        "Bake Temperature": 0,
-        "Directions": "No Directions",
+        "Ingredients": "yellow 48, ",
+        "Bake Time": "58 min",
+        "Bake Temperature": 499,
+        "Directions": "Enter text here",
         "Favorite": 0
     },
     "test 4": {

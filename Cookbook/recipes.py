@@ -1,4 +1,5 @@
 import json
+import os
 #from serverCheck import checker
 #from dbConnection import Lookup
 class Recipes():
@@ -17,6 +18,7 @@ class Recipes():
     process = 'add'
     idHold = 0
     tempFConvert = ''
+    jFile = ''
 
     def add(self):
         if(self.process == 'update'):
@@ -25,30 +27,32 @@ class Recipes():
             print("Welcome to adding a recipe\n")
 
         while(self.rerun):
-            self.name = input("What is the name of the recipe\n")
+            if self.process == 'add':
+                self.name = input("What is the name of the recipe\n")
 
-            typeInput = 0
-            while(typeInput <= 0 or typeInput > 7):
-                try:
-                    typeInput = int(input('What type of recipe is it? \n(1) for Breakfast \n(2) for Main Dish \n(3) for Side Dish \n(4) for Soup \n(5) for Bread \n(6) for Dessert \n(7) for Drink \n'))
-                except: 
-                    typeInput = 0
-                if typeInput == 1:
-                    self.recipeType = 'Breakfast.json'
-                elif typeInput == 2:
-                    self.recipeType = 'Main_Dish.json'
-                elif typeInput == 3:
-                    self.recipeType = 'Side_Dish.json'
-                elif typeInput == 4:
-                    self.recipeType = 'Soup.json'
-                elif typeInput == 5:
-                    self.recipeType = 'Bread.json'
-                elif typeInput == 6:
-                    self.recipeType = 'Dessert.json'
-                elif typeInput == 7:
-                    self.recipeType = 'Drink.json'
-                else:
-                    print('Incorrect input')
+                typeInput = 0
+                while(typeInput <= 0 or typeInput > 7):
+                
+                    try:
+                        typeInput = int(input('What type of recipe is it? \n(1) for Breakfast \n(2) for Main Dish \n(3) for Side Dish \n(4) for Soup \n(5) for Bread \n(6) for Dessert \n(7) for Drink \n'))
+                    except: 
+                        typeInput = 0
+                    if typeInput == 1:
+                        self.recipeType = 'Breakfast.json'
+                    elif typeInput == 2:
+                        self.recipeType = 'Main_Dish.json'
+                    elif typeInput == 3:
+                        self.recipeType = 'Side_Dish.json'
+                    elif typeInput == 4:
+                        self.recipeType = 'Soup.json'
+                    elif typeInput == 5:
+                        self.recipeType = 'Bread.json'
+                    elif typeInput == 6:
+                        self.recipeType = 'Dessert.json'
+                    elif typeInput == 7:
+                        self.recipeType = 'Drink.json'
+                    else:
+                        print('Incorrect input')
 
 
 
@@ -134,9 +138,6 @@ class Recipes():
                 self.favorite = 0
 
 
-
-
-
         if(self.process == 'add'):
             jsonFile = open(self.recipeType, "r")
             convertFile = json.load(jsonFile)
@@ -157,7 +158,21 @@ class Recipes():
             jsonFile.close()
             
         else:
-            pass
+            jsonFile = open(self.jFile, "r")
+            convertFile = json.load(jsonFile)
+            jsonFile.close()
+            
+
+            convertFile[self.idHold]["Ingredients"] = self.ingString
+            convertFile[self.idHold]["Bake Time"] = self.bakeTime
+            convertFile[self.idHold]["Bake Temperature"] = self.bakeTemp
+            convertFile[self.idHold]["Directions"] = self.directions
+            convertFile[self.idHold]["Favorite"] = self.favorite
+
+            revertFile = json.dumps(convertFile, indent=4)
+            jsonFile = open(self.jFile, "w")
+            jsonFile.write(revertFile)
+            jsonFile.close()
                 
 
 
@@ -202,39 +217,85 @@ class Recipes():
 
 
     def update(self):
-        
+        convertedRecipes = {}
         inList = False
-        print('Welcome to the update menu')
-
-        mycursor = Lookup.mydb.cursor()
-        mycursor.execute("SELECT Id, Name, Type FROM recipes ORDER BY Id")
-        myresult = mycursor.fetchall()
-
-        for x in myresult:
-            print('Id: %i   Name: %s   Type: %s \n' % (x))
-        tbUpdate = input('Please type the Id you would like to update.\nOtherwise, type cancel to go back. \n')
-        #Need exception handling
-        if(tbUpdate == "cancel"):
-            tbUpdate = 0
-            return
+        while inList == False:
+            print('Welcome to the update menu')
             
-        tbUpdate = int(tbUpdate)
+            self.jFile = self.selectRecipe()
+            
+            updateRecipe = input("\nWhich recipe would you like to update? (Capitalization matters!)\n")
+            
+            with open(self.jFile) as recipes:
+                convertedRecipes = json.load(recipes)
 
-        for x in myresult:
-            if(tbUpdate == x[0]):
+            if updateRecipe in convertedRecipes:
+                self.process = 'update'
+                self.idHold = updateRecipe
+                self.add()
                 inList = True
             else:
-                pass
-        if(inList == False):
-            print('No recipe found with that Id\n')
-        else:
-            self.process = 'update'
-            self.idHold = tbUpdate
-            self.add()
+                print('Incorrect recipe')
+                re = input("Would you like to try a different recipe. Yes or No\n")
+                if re.lower() == 'yes':
+                    pass
+                else:
+                    inList = True
+
+        #for x in myresult:
+        #    if(tbUpdate == x[0]):
+        #        inList = True
+        #    else:
+        #        pass
+        #if(inList == False):
+        #    print('No recipe found with that Id\n')
+        #else:
+        #    self.process = 'update'
+        #    self.idHold = tbUpdate
+        #    self.add()
         
 
+    def selectRecipe(self):
 
+        typeInput = 0
+        recipeType = ''
+        recipeHolder = {}
+        while(typeInput <= 0 or typeInput > 7):
+            try:
+                typeInput = int(input('What type of recipe are you looking for?\n(1) for Breakfast \n(2) for Main Dish \n(3) for Side Dish \n(4) for Soup \n(5) for Bread \n(6) for Dessert \n(7) for Drink \n'))
+            except: 
+                typeInput = 0
+            if typeInput == 1:
+                recipeType = 'Breakfast.json'
+            elif typeInput == 2:
+                recipeType = 'Main_Dish.json'
+            elif typeInput == 3:
+                recipeType = 'Side_Dish.json'
+            elif typeInput == 4:
+                recipeType = 'Soup.json'
+            elif typeInput == 5:
+                recipeType = 'Bread.json'
+            elif typeInput == 6:
+                recipeType = 'Dessert.json'
+            elif typeInput == 7:
+                recipeType = 'Drink.json'
+            else:
+                print('Incorrect input')
 
+        for file in os.listdir("../Cookbook"):
+            if(file == recipeType):
+                with open(file, "r") as jsonRecipe:
+                    f = json.load(jsonRecipe)
+                    recipeHolder = f.copy()
+                    jsonRecipe.close()
+        
+        if(len(recipeHolder) == 0):
+            print("There are currently no recipes for this type.")
+        for reName, reInfo in recipeHolder.items():
+            print("\nRecipe Name:", reName)
+            
+            for key in reInfo:
+                print(key + ':', reInfo[key])
 
-
+        return recipeType
         
