@@ -182,38 +182,33 @@ class Recipes():
 
     
     def delete(self):
+        convertedRecipes = {}
         inList = False
-        print('Welcome to the delete menu')
-
-        mycursor = Lookup.mydb.cursor()
-        mycursor.execute("SELECT Id, Name, Type FROM recipes ORDER BY Id")
-        myresult = mycursor.fetchall()
-
-        for x in myresult:
-            print('Id: %i   Name: %s   Type: %s \n' % (x))
-        tbDelete = input('Please type the Id you would like to delete.\nOtherwise, type cancel to go back. \n')
-        #Need exception handling
-        if(tbDelete == "cancel"):
-            tbDelete = 0
-            return
+        while inList == False:
+            print('Welcome to the delete menu')
             
-        tbDelete = int(tbDelete)
+            self.jFile = self.selectRecipe()
+            
+            deleteRecipe = input("\nWhich recipe would you like to delete? (Capitalization matters!)\n")
+            
+            with open(self.jFile) as recipes:
+                convertedRecipes = json.load(recipes)
 
-        for x in myresult:
-            if(tbDelete == x[0]):
+            if deleteRecipe in convertedRecipes:
+                del convertedRecipes[deleteRecipe]
+                revertFile = json.dumps(convertedRecipes, indent=4)
+                jsonFile = open(self.jFile, "w")
+                jsonFile.write(revertFile)
+                jsonFile.close()
                 inList = True
             else:
-                pass
-        if(inList == False):
-            print('No recipe found with that Id\n')
-        else:
-            mycursor2 = Lookup.mydb.cursor()
-            sql = "DELETE FROM recipes WHERE Id = %s"
-            adr = (tbDelete,)
-            
-            mycursor2.execute(sql, adr)
-
-            Lookup.mydb.commit()
+                print('Incorrect recipe')
+                re = input("Would you like to try a different recipe. Yes or No\n")
+                if re.lower() == 'yes':
+                    pass
+                else:
+                    inList = True
+        
 
 
     def update(self):
