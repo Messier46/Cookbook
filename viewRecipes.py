@@ -1,18 +1,18 @@
-from dbConnection import Lookup
+# from dbConnection import Lookup
 import os
 import json
+
+
 class ViewRecipes():
     """description of class"""
-
-
 
     def viewAll(self):
         recipeHolder = {}
         for file in os.listdir("../Cookbook"):
-            if(file.endswith(".json")):
+            if file.endswith(".json"):
                 with open(file, "r") as jsonRecipe:
                     f = json.load(jsonRecipe)
-                    if(len(recipeHolder) == 0):
+                    if len(recipeHolder) == 0:
                         recipeHolder = f.copy()
 
                     else:
@@ -20,20 +20,21 @@ class ViewRecipes():
                     jsonRecipe.close()
         for reName, reInfo in recipeHolder.items():
             print("\nRecipe Name:", reName)
-            
+
             for key in reInfo:
                 print(key + ':', reInfo[key])
-        
 
     def viewSelect(self):
 
         typeInput = 0
         recipeType = ''
         recipeHolder = {}
-        while(typeInput <= 0 or typeInput > 7):
+        while typeInput <= 0 or typeInput > 7:
             try:
-                typeInput = int(input('What type of recipe are you looking for?\n(1) for Breakfast \n(2) for Main Dish \n(3) for Side Dish \n(4) for Soup \n(5) for Bread \n(6) for Dessert \n(7) for Drink \n'))
-            except: 
+                typeInput = int(input(
+                    'What type of recipe are you looking for?\n(1) for Breakfast \n(2) for Main Dish \n'
+                    '(3) for Side Dish \n(4) for Soup \n(5) for Bread \n(6) for Dessert \n(7) for Drink \n'))
+            except:
                 typeInput = 0
             if typeInput == 1:
                 recipeType = 'Breakfast.json'
@@ -53,23 +54,19 @@ class ViewRecipes():
                 print('Incorrect input')
 
         for file in os.listdir("../Cookbook"):
-            if(file == recipeType):
+            if file == recipeType:
                 with open(file, "r") as jsonRecipe:
                     f = json.load(jsonRecipe)
                     recipeHolder = f.copy()
                     jsonRecipe.close()
-        
-        if(len(recipeHolder) == 0):
+
+        if len(recipeHolder) == 0:
             print("There are currently no recipes for this type.")
         for reName, reInfo in recipeHolder.items():
             print("\nRecipe Name:", reName)
-            
+
             for key in reInfo:
                 print(key + ':', reInfo[key])
-    
-
-
-
 
     def printLoop(self, tupHold):
         for tup in tupHold:
@@ -77,19 +74,19 @@ class ViewRecipes():
                 if st == 0:
                     print('Name: %s' % (var))
                 elif st == 1:
-                    if(var == None or var == ''):
+                    if var == None or var == '':
                         pass
                     else:
                         print('Type: %s' % (var))
                 elif st == 2:
                     print('Ingredients: %s' % (var))
                 elif st == 3:
-                    if(var == None or var == ''):
+                    if var == None or var == '':
                         pass
                     else:
                         print('Bake Time: %s' % (var))
                 elif st == 4:
-                    if(var == None or var == ''):
+                    if var == None or var == '':
                         pass
                     else:
                         print('Bake Temp: %i' % (var))
@@ -97,11 +94,10 @@ class ViewRecipes():
                     print('Directions: %s' % (var))
 
                 elif st == len(tup) - 1:
-                    if(var == 0):
+                    if var == 0:
                         print('Favorite: No')
                     else:
                         print('Favorite: Yes')
                     print()
                 else:
                     print('ERROR')
-
