@@ -8,7 +8,7 @@ class ViewRecipes():
 
     def viewAll(self):
         recipeHolder = {}
-        for file in os.listdir("../Cookbook"):
+        for file in os.listdir():
             if file.endswith(".json"):
                 with open(file, "r") as jsonRecipe:
                     f = json.load(jsonRecipe)
@@ -53,7 +53,7 @@ class ViewRecipes():
             else:
                 print('Incorrect input')
 
-        for file in os.listdir("../Cookbook"):
+        for file in os.listdir():
             if file == recipeType:
                 with open(file, "r") as jsonRecipe:
                     f = json.load(jsonRecipe)

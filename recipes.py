@@ -26,9 +26,9 @@ class Recipes:
 
     def add(self):
         if self.process == 'update':
-            print('Welcome to updating a recipe\n')
+            print('\nWelcome to updating a recipe\n')
         else:
-            print("Welcome to adding a recipe\n")
+            print("\nWelcome to adding a recipe\n")
 
         while self.rerun:
             if self.process == 'add':
@@ -61,7 +61,7 @@ class Recipes:
                         print('Incorrect input')
 
             while self.amount <= 0:
-                # Need to add exception handling expecially here
+                # Need to add exception handling especially here
                 try:
                     self.amount = int(input('How many ingredients are there.\n'))
                 except:
@@ -87,7 +87,7 @@ class Recipes:
                     self.bakeTime = input('Blank input. What is the baking time\n')
                 while self.bakeTemp == 0:
                     try:
-                        self.bakeTemp = int(input('What is the baking temprature (only the number)\n'))
+                        self.bakeTemp = int(input('What is the baking temperature (only the number)\n'))
                     except:
                         self.bakeTemp = 0
             elif self.decTemp.lower() == 'no':
@@ -98,7 +98,7 @@ class Recipes:
                 "What are the directions for making the recipe. \nRemember proper spelling and spacing.\n")
 
             # Ask whether this is a family favorite
-            self.favPick = input('Is this a family favorite (Yes or No)\n')
+            self.favPick = input('Is this a family favorite? (Yes or No)\n')
             while self.favPick.lower() != 'yes' and self.favPick.lower() != 'no':
                 self.favPick = input('Incorrect input. Is this a family favorite (Yes or No)\n')
 
@@ -112,7 +112,7 @@ class Recipes:
 
             # checker(self, self.name, self.ingString, self.bakeTime, self.directions)
 
-            # Converts ingredent list into a string
+            # Converts ingredient list into a string
             for x in self.ing:
                 self.ingString += x
             # Relists everything the person has typed to be reviewed
