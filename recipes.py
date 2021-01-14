@@ -131,7 +131,7 @@ class Recipes:
             # If yes leaves rerun while loop
             if clearUp == 'yes':
                 self.rerun = False
-            # If no clears the variables to be readded
+            # If no clears the variables to be read
             elif clearUp == 'no':
                 self.rerun = True
                 self.name = ''
